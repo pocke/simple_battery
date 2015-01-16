@@ -31,19 +31,19 @@ func main() {
 
 	e := goevent.NewTable()
 	e.On("add", func(n int) {
-		log.Printf("add %d\n", n)
+		log.Printf("add BAT%d\n", n)
 		var icon *gtk.StatusIcon
 		gthread(func() {
 			icon = gtk.NewStatusIconFromStock(gtk.STOCK_FILE)
 		})
-		icon.SetTitle(fmt.Sprint("%d", n))
+		icon.SetTitle(fmt.Sprint("BAT%d", n))
 		mu.Lock()
 		defer mu.Unlock()
 		statusIcons[n] = icon
 	})
 
 	e.On("delete", func(n int) {
-		log.Printf("delete %d\n", n)
+		log.Printf("delete BAT%d\n", n)
 		mu.Lock()
 		defer mu.Unlock()
 		gthread(func() {
@@ -53,11 +53,11 @@ func main() {
 	})
 
 	e.On("change", func(n, v int) {
-		log.Printf("change %d %d\n", n, v)
+		log.Printf("change BAT%d %d\n", n, v)
 		gthread(func() {
 			mu.Lock()
 			mu.Unlock()
-			statusIcons[n].SetTooltipText(fmt.Sprintf("%d", v))
+			statusIcons[n].SetTooltipText(fmt.Sprintf("BAT%d: %d", n, v))
 		})
 	})
 
