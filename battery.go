@@ -19,11 +19,8 @@ func WatchBattery(e goevent.Table) {
 		b.Update()
 
 		t := time.Tick(1 * time.Minute)
-		for {
-			select {
-			case <-t:
-				b.Update()
-			}
+		for _ = range t {
+			b.Update()
 		}
 	}()
 }
