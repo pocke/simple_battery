@@ -4,6 +4,15 @@ simple battery
 バッテリー残量を表示するだけ
 
 
+Build
+-----------
+
+```sh
+$ go get -u github.com/jteeuwen/go-bindata/...
+$ make
+```
+
+
 License
 ----------
 
