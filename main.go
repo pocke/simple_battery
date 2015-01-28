@@ -21,16 +21,25 @@ func gthread(f func()) {
 	f()
 }
 
+var (
+	iconPixbufs = make([]*gdkpixbuf.Pixbuf, 5)
+)
+
 func getIcon(v int) *gdkpixbuf.Pixbuf {
-	loader, _ := gdkpixbuf.NewLoaderWithType("png")
 	n := int(math.Ceil(float64(v) / 20.0))
+	if iconPixbufs[n-1] != nil {
+		return iconPixbufs[n-1]
+	}
+
+	loader, _ := gdkpixbuf.NewLoaderWithType("png")
 	f, err := Asset(fmt.Sprintf("assets/battery-bar-%d-icon.png", n))
 	if err != nil {
 		log.Println(err)
 		f, _ = Asset("assets/battery-bar-1-icon.png")
 	}
 	loader.Write(f)
-	return loader.GetPixbuf()
+	iconPixbufs[n-1] = loader.GetPixbuf()
+	return iconPixbufs[n-1]
 }
 
 func main() {
