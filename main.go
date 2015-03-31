@@ -26,9 +26,15 @@ var (
 )
 
 func getIcon(v int) *gdkpixbuf.Pixbuf {
-	n := int(math.Ceil(float64(v) / 20.0))
-	if iconPixbufs[n-1] != nil {
-		return iconPixbufs[n-1]
+	if v < 0 {
+		v = 0
+	}
+	if v > 99 {
+		v = 99
+	}
+	n := int(math.Floor(float64(v) / 20.0))
+	if iconPixbufs[n] != nil {
+		return iconPixbufs[n]
 	}
 
 	loader, _ := gdkpixbuf.NewLoaderWithType("png")
@@ -38,8 +44,8 @@ func getIcon(v int) *gdkpixbuf.Pixbuf {
 		f, _ = Asset("assets/battery-bar-1-icon.png")
 	}
 	loader.Write(f)
-	iconPixbufs[n-1] = loader.GetPixbuf()
-	return iconPixbufs[n-1]
+	iconPixbufs[n] = loader.GetPixbuf()
+	return iconPixbufs[n]
 }
 
 func main() {
