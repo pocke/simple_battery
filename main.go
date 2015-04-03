@@ -26,6 +26,9 @@ var (
 )
 
 func getIcon(v int) *gdkpixbuf.Pixbuf {
+	if v <= 0 {
+		v = 1
+	}
 	n := int(math.Ceil(float64(v) / 20.0))
 	if iconPixbufs[n-1] != nil {
 		return iconPixbufs[n-1]
